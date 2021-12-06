@@ -25,16 +25,16 @@ def time_train_test_split(df, n_splits):
 
 	Inputs:
 	df(Dataframe): dataframe structure with features for machine learning
-            splits; must have a 'Year' column or have the index be a datetime object 
-            and must have at least three years of data for the splits.
+        	splits; must have a 'Year' column or have the index be a datetime object 
+        	and must have at least three years of data for the splits.
 
         n_splits (int): number of splits by years of data; typically = 
-            number of years - 2
+        	number of years - 2
 
 	Outputs:
         splits (dict): a dictionary of key:value pairs with each component
-        representing a sequentially increasing (by years) set of dataframes 
-        to be used as training/validation and testing sets.
+		representing a sequentially increasing (by years) set of dataframes 
+        	to be used as training/validation and testing sets.
     """
 
     if (n_splits < 3):
