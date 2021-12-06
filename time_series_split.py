@@ -24,7 +24,7 @@ def time_train_test_split(df, n_splits):
     machine learning.
 
 	Inputs:
-		df(Dataframe): dataframe structure with features for machine learning
+	df(Dataframe): dataframe structure with features for machine learning
             splits; must have a 'Year' column or have the index be a datetime object 
             and must have at least three years of data for the splits.
 
