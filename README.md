@@ -96,7 +96,8 @@ Finally, with the optimal hyperparameters, we assess model performance in year i
 To predict LST, we created features from the raw bands. We computed the following features using band data as shown below:
 
 #### Normalized Difference Vegetation Index (NDVI) 
-NDVI = $$b5 - b4b5 + b4$$ 
+NDVI = $b5 - b4b5 + b4$
+
 
 (Landsat Normalized Difference Vegetation Index | U.S. Geological Survey, 2021)
 
