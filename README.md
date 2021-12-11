@@ -92,6 +92,33 @@ For a given model, we train the data on a given year i and choose optimal hyperp
 Finally, with the optimal hyperparameters, we assess model performance in year i + 2. 
 
 
+### Features
+To predict LST, we created features from the raw bands. We computed the following features using band data as shown below:
+
+#### Normalized Difference Vegetation Index (NDVI) 
+NDVI = $$b5 - b4b5 + b4$$ 
+
+(Landsat Normalized Difference Vegetation Index | U.S. Geological Survey, 2021)
+
+Normalized Difference Snow Index (NDSI)
+NDSI = b3 - b6b3 + b6 (Landsat Normalized Difference Snow Index | U.S. Geological Survey, 2021)
+
+Normalized Difference Built-up Index (NDBI)
+NDBI = b6 - b5b6 + b5 (NDBI—ArcGIS Pro | Documentation, 2021)
+
+albedo
+albedo = (.356 * b1) + (.1310 * b2) + (.373 * b3) + (.085 * b4) +(0.072*b5)-0.00181.016   (Liang, 2000)
+
+Automated Water Extraction Index (AWEInsh) 
+AWEI= 4(b3 - b6)-(.25b5 + 2.75 b6)    (Gudian et. al,  2014)
+
+Global Environmental Monitoring Index (GEMI)
+GEMI = eta (1-.25eta) - b4-.1251-b4 where   eta =2*(b52-b42) + 1.5b5 + 0.5b4(b5+b4+0.5) (GEMI—ArcGIS Pro | Documentation, 2021)
+
+Land Surface Temperature (LST)
+LST=  b101+(10.895(b10/14380))ln(LSE) where LSE = 0.04α +0.986  where α =  (NDVI - min(NDVI)max(NDVI) - min(NDVI)) 2   (Avdan and Jovanovska, 2016)
+
+
 
 ## Results
 
