@@ -78,14 +78,16 @@ We use the period and community area averages to compute the estimates of ndvi, 
 Thus, our feature matrix is organized so that each row refers to an individual Community Area in a given year. Each column is a feature, either one of those described in the Features section or the spatial lag of one of those features in a given period. Thus, a given row has four features associated with, for example, NDVI: NDVI Early Summer, NDVI Late Summer, Spatial Lag of NDVI Early Summer, Spatial Lag of NDVI Late Summer. 
 
 #### Models:
-We use a family of linear models. Specifically, we test OLS Regression, Ridge Regression, LASSO Regression, and Elastic Net Regularization. For the last three models, we test a variety of hyperparameters.
+Linear Regression: We use a family of linear models. Specifically, we test OLS Regression, Ridge Regression, LASSO Regression, and Elastic Net Regularization. For the last three models, we test a variety of hyperparameters.
+
+Time Series: Given the importance of the time dimension for our ability to predict temperature, our modeling relies on many assumptions included in many traditional time series models, with a few caveats described in the next section.
 
 #### Training, Cross-Validation, Testing
-Given the importance of the time dimension for our ability to predict temperature, our modeling relies on many assumptions included in many traditional time series models, with a few caveats. 
 Given the infrequency (one scene every two weeks or so) of the satellite imagery collected across the entire period, we can’t reliably ensure that we have equal amounts of data for different sub periods within our timeframe for training, an important aspect of time series models.
-Additionally, traditional k-fold cross validation’s randomized approach to splitting data does not work within our time series problem domain. This is because data leakage is likely to occur due to the temporal dependencies between temperature across time (e.g. the temperature yesterday has a strong impact on the temperature today). Additionally, because the choice of test set is arbitrary in traditional cross-validation, our test set error is likely to be a poor estimate of error on a new, independent set (Cochrane, 2018).
-For a given model, we train the data on a given year i and choose optimal hyperparameters by cross-validating the model performance against the predicted LST in year i + 1. 
-Finally, with the optimal hyperparameters, we assess model performance in year i + 2. 
+
+Additionally, traditional k-fold cross validation’s randomized approach to splitting data does not work within our time series problem domain. This is because data leakage is likely to occur due to the temporal dependencies between temperature across time (e.g. the temperature yesterday has a strong impact on the temperature today). Additionally, because the choice of test set is arbitrary in traditional cross-validation, our test set error is likely to be a poor estimate of error on a new, independent set (Cochrane, 2018). We found one solution that requires modifying the splitting and cross_validation methodology in a very different manner than is usuallt done with Linear Regressions.
+
+Day-Forward Chaining Model: For a given model, we train the data on a given year ‘i’ and choose optimal hyperparameters by cross-validating the model performance against the predicted LST in year ‘i + 1’. Finally, with the optimal hyperparameters, we assess model performance in year ‘i + 2’. We continue to do this over successive years/folds until we reach the final test year and choose the best model amongst all iterations of these folds to predict land surface temperature.
 
 
 ### Features Formulas
@@ -136,6 +138,21 @@ LST=  b101+(10.895(b10/14380))ln(LSE) where LSE = 0.04α +0.986  where α =  (ND
 
 ## Results
 
+**Best Linear Model & Metrics:**
+
+- Model: Ridge
+- Params: {'alpha': 1}
+
+'RMSE': 5.988882277443004
+'MAE': 4.76633515321592
+'R^2': 0.8455222698453201
+
+**Feature Importance**
+
+![Highest Positive Coefficients](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_pos_features.png)
+
+![Highest Negative Coefficients(https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_neg_features.png)
+
 **Actual Maximum LST 2020 by Community Area** 
 
 ![Actual LST 2020](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/actual.jpg)
@@ -153,6 +170,10 @@ LST=  b101+(10.895(b10/14380))ln(LSE) where LSE = 0.04α +0.986  where α =  (ND
 
 
 ## Conclusion
+In this project, we used the Midway2 Computing Cluster to handle 133 Landsat 8 scenes in a parallel manner. Our data-processing pipeline resulted in a small dataframe upon which we performed Machine Learning. We found that, with some custom code and the Day-Forward Chaining Model, we could train our time series data and create models for prediction that did not suffer from data leakage, intermittent data sequences, and potential test error. Our project utilized several metrics to evaluate our best model including R^2, Mean Absolute Error, and Root Mean Squared Error, and our results, shown above, led to some accurate predictions for Land Surface Temperatue as shown in the map of our final test year (2020). Our main metric, R2, showed that a great deal of our model's predictive variance (84%) could be explained by the other features in our regression model, and, unsurprisingly, our model seemed to be most impacted by the spatial lag feature for surface temperature (LST_lag) we included that could better help predict heat given the temperatures of the neighborhoods surrounding a community.
+
+
+We believe that this type of model has policy relevance. Specifically, it could be useful to Chicago leaders who seek to know areas that will likely suffer from UHI and how hot the hottest time in future summers will be. We are hopeful that the city and other stakeholders take the time to carefully consider areas of Chicago that may be most vulnerable during times with high temperatures, so as to never repeat the tragedy of 1995 and to better protect all of its citizens.
 
 ## Contributions
 
