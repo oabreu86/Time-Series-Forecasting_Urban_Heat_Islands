@@ -7,6 +7,10 @@
 
 ## Repo Organization
 
+## Link to Video
+
+We made a short video (<5 minutes) summarizing this project! You can see it here!
+
 ## Introduction
 
 ## Large Scale Data Solution
