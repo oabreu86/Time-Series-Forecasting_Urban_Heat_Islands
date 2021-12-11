@@ -68,6 +68,29 @@ We downloaded Landsat8 data from the USGS Earth Explorer. We initially considere
 
 To summarize, this subprocess moves data from many scenes for a given year, each of which contain 8 .TIF files(bands), to two 2D arrays. Each array contains 77 rows, one for each Community Area. Each array also contains 14 columns, one column for each of the features (inclusing LST that is our target variable) shown in the feature section below and one column for the spatial lag of those features.
 
+5. Aggregating the Feature Set:
+    - Our intelligent parallelization and aggregation by community area design ensures that each core returns an array with the same shape since the number of Landsat scenes may vary from year to year. This made possible the gathering of all the arrays on a single core after the preprocessing and feature engineering. 
+    - We performed a Gather operation to stack together all of the 2D numpy arrays from each of the cores.
+    - We converted this to a pandas dataframe and subsequently wrote out the results as a CSV.
+
+### Machine Learning:
+Note: We considered using Dask to perform our ML. However, our data is relatively small. After the pre-processing steps, we reduced our data to have 1232 rows (77 Community Areas * 8 years * 2 periods) and 17 columns (7 true features + 7 spatial lags of features+ year+period+community area number). Additionally, the dask_ml libraries that would save us the most computational time through parallelization (GridSearch, Pipeline, CrossValidator) do not fit our time series modeling due to the need for more custom code for those functions. We decided that the communication costs associated with Dask and lack of flexibility for our problem domain with dask_ml were not worth the small parallelization benefit and ran sklearn algorithms locally.
+
+#### Features: 
+As alluded to above, we first determine band averages (in multiple senses). First we average all band values for given 30m x 30m cells in the Landsat data to the Community Area level for a given scene. Then we average those Community Area averages into two groupings per year based on month (May and June for early summer and July, August, and September for late summer). 
+We use the period and community area averages to compute the estimates of ndvi, ndsi, albedo, awei, eta, and gemi and then determine the spatial lag for each of those variables.
+Thus, our feature matrix is organized so that each row refers to an individual Community Area in a given year. Each column is a feature, either one of those described in the Features section or the spatial lag of one of those features in a given period. Thus, a given row has four features associated with, for example, NDVI: NDVI Early Summer, NDVI Late Summer, Spatial Lag of NDVI Early Summer, Spatial Lag of NDVI Late Summer. 
+
+#### Models:
+We use a family of linear models. Specifically, we test OLS Regression, Ridge Regression, LASSO Regression, and Elastic Net Regularization. For the last three models, we test a variety of hyperparameters.
+
+#### Training, Cross-Validation, Testing
+Given the importance of the time dimension for our ability to predict temperature, our modeling relies on many assumptions included in many traditional time series models, with a few caveats. 
+Given the infrequency (one scene every two weeks or so) of the satellite imagery collected across the entire period, we can’t reliably ensure that we have equal amounts of data for different sub periods within our timeframe for training, an important aspect of time series models.
+Additionally, traditional k-fold cross validation’s randomized approach to splitting data does not work within our time series problem domain. This is because data leakage is likely to occur due to the temporal dependencies between temperature across time (e.g. the temperature yesterday has a strong impact on the temperature today). Additionally, because the choice of test set is arbitrary in traditional cross-validation, our test set error is likely to be a poor estimate of error on a new, independent set (Cochrane, 2018).
+For a given model, we train the data on a given year i and choose optimal hyperparameters by cross-validating the model performance against the predicted LST in year i + 1. 
+Finally, with the optimal hyperparameters, we assess model performance in year i + 2. 
+
 
 
 ## Results
