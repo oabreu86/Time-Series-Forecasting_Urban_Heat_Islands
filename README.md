@@ -140,15 +140,7 @@ LST=  b101+(10.895(b10/14380))ln(LSE) where LSE = 0.04α +0.986  where α =  (ND
 
 ### Best performing Model
 
-Our best performing model was a Ridge Regression with a regularization coefficient of 1. This model had an RMSE of 5.99, an MAE of 4.77, and an R^2 of .846. These results indicate that this model could effectively explain a *high degree* of the variation in future LST variation at the Chicago Community Area scale. 
-
-**Feature Importance**
-
-We also assessed the feature importance of this model (Ridge Regression with Hyperparameters as follows):
-![Highest Positive Coefficients](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_pos_features.png)
-
-![Highest Negative Coefficients](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_neg_features.png)
-
+Our best performing model was a Ridge Regression with a regularization coefficient of 1. This model had an RMSE of 5.99, an MAE of 4.77, and an R^2 of .846. These results indicate that this model could effectively explain a *high degree* of the variation in future LST variation at the Chicago Community Area scale. The spatial distribution of the 2020 actual LST, predicted LST, and differences (in Kelvin), are shown in the three maps below. 
 
 
 
@@ -165,6 +157,16 @@ We also assessed the feature importance of this model (Ridge Regression with Hyp
 **Differemce Maximum LST 2020 by Community Area** 
 
 ![Difference LST 2020](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/difference.jpg)
+
+
+**Feature Importance**
+
+We also assessed the feature importance of this model (Ridge Regression with Hyperparameters as follows):
+![Highest Positive Coefficients](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_pos_features.png)
+
+![Highest Negative Coefficients](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_neg_features.png)
+
+
 
 
 
