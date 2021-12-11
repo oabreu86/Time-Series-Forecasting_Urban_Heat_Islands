@@ -151,7 +151,7 @@ LST=  b101+(10.895(b10/14380))ln(LSE) where LSE = 0.04α +0.986  where α =  (ND
 
 ![Highest Positive Coefficients](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_pos_features.png)
 
-![Highest Negative Coefficients(https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_neg_features.png)
+![Highest Negative Coefficients](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/project_neg_features.png)
 
 **Actual Maximum LST 2020 by Community Area** 
 
