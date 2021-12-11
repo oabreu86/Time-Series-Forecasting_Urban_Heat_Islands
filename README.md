@@ -5,3 +5,16 @@
 ##### MACS 30123: Large Scale Computing for the Social Sciences
 ##### Friday, December 10, 2021
 
+## Repo Organization
+
+## Introduction
+
+## Large Scale Data Solution
+
+## Results
+
+## Conlusion
+
+## Contributions
+
+## Work Cited 
