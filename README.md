@@ -136,7 +136,16 @@ LST=  b101+(10.895(b10/14380))ln(LSE) where LSE = 0.04α +0.986  where α =  (ND
 
 ## Results
 
+**Actual Maximum LST 2020 by Community Area** 
 ![Actual LST 2020](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/actual.jpg)
+
+
+**Predicted Maximum LST 2020 by Community Area** 
+![Predicted LST 2020](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/prediction.jpg)
+
+
+**Differemce Maximum LST 2020 by Community Area** 
+![Difference LST 2020](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/difference.jpg)
 
 
 
