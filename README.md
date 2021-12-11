@@ -13,6 +13,21 @@ We made a short video (<5 minutes) summarizing this project! You can see it here
 
 ## Introduction
 
+Temperatures across the world are rising. Large urban centers are particularly susceptible to disproportionate temperature rises. The “Urban Heat Island Effect” (UHI) describes the phenomenon of higher temperatures in urban zones compared with surrounding suburban and rural areas. UHIs tend to occur in areas with little vegetation, near freeways, and high levels of impervious surfaces (Chun and Guldmann, 2014).The consequences of extreme heat events worsened by UHI can include illness and death. 
+
+UHI and extreme heat waves are particularly relevant in the Chicago context; in the summer of 1995, an estimated 739 Chicagoans, mostly from low-income neighborhoods, died as a consequence of a heat wave (Abreu, 2021). UHIs remain a pressing concern for Chicago. The Environmental Protection Agency reports that in high emissions scenarios, Chicago could experience an additional 30 days per year that reach temperatures above 100℉ (EPA). 
+Cities induce UHIs through various channels. Cities tend to have highly concentrated consumption of energy resources as a consequence of their clustering of many people. Some of this energy dissipates as heat. Large urban structures can also trap some of this heat. On a local scale, buildings, green spaces, and pavement impact local temperature (Gago et al. 2013). 
+
+In the long term, cities can take a number of responses based on expanding green spaces and making alternative urban design interventions. Cities can encourage urban greening by planting urban trees, creating and expanding parks, and encouraging green and roofs. Some research also indicates cities can use “cold” pavement materials. Cities can also use zoning to change their urban form. Research suggests that this could improve shade and mitigate solar radiation (Gago et al. 2013). 
+
+However, these are long-term responses. UHIs, particularly during warm summers like 1995, reflect imminent threats., and cities like Chicago could use advanced knowledge of communities likely to be particularly hard-hit by UHIs. This project seeks to respond to that need. 
+
+More specifically, we use LandSat 8 data imagery to identify LST and also other facets of the built and natural environment at the Chicago Community Area scale. We then build a set of Machine Learning models to predict a neighborhood’s LST in future years given previous years’ data. Our study period was 2013-2020. We conducted analysis at the Chicago Community Area level. This type of modelling could be useful for the City of Chicago in that model predictions from a given year could help identify the extent to which UHIs will impact certain neighborhoods and take short-term policy actions in response. The spatial scale is also salient given that Chicago leaders and residents both have good conceptions of their neighborhood as determined by Community Area. 
+
+The rest of this write-up is as follows. In the Large Scale Data solution, we describe our data more explicitly. We also outline the pipeline we used to convert raw Landsat data to usable features in an ML context. In the Machine Learning section, we detail our ML models. In our Results section, we describe the results of our Machine Learning, and we offer a brief Conclusion section. 
+
+
+
 ## Large Scale Data Solution
 
 ## Results
