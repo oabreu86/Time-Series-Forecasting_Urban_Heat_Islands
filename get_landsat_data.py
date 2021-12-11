@@ -17,7 +17,6 @@ import util
 import precompiled_func
 
 
-# SHARED_DATA_FOLDER = Path('sample_data')
 SHARED_DATA_FOLDER = Path('/project2/macs30123/project_landsat/landsat_scenes')
 all_scenes = [folder for folder in listdir(SHARED_DATA_FOLDER) if 'LC08' in folder]
 
@@ -60,33 +59,22 @@ def create_features():
         b6 = util.compute_zonal_stats(band_path[5], com_areas, "b6")
         b7 = util.compute_zonal_stats(band_path[6], com_areas, "b7")
         b10 = util.compute_zonal_stats(band_path[7], com_areas, "b10")
-
-        (ndvi, ndsi, ndbi, albedo, awei, gemi, LST) = precompiled_func.caclulate_features_from_landsat(b1, b2, b3, b4, b5, b6, b7, b10)
-
-        # ndvi = np.where((b4+b5)==0, 0, (b5-b4)/(b5+b4))
-        # ndsi =np.where((b3+b6)==0, 0, (b3-b6)/(b3+b6))
-        # ndbi = np.where((b6+b5)==0, 0, (b6-b5)/(b6+b5))
-        # albedo = ((0.356*b1)+(0.1310*b2)+(0.373*b3)+\
-        #                 (0.085*b4)+(0.072*b5)-0.0018)/1.016
-        # awei = 4*(b3-b6)-(0.25*b5 + 2.75*b6)
-        # eta = (2*(b5**2-b4**2) + 1.5*b5 + 0.5*b4) / (b5+b4+0.5)
-        # gemi = eta*(1-0.25*eta) - ((b4-0.125)/(1-b4))   
+        (ndvi, ndsi, ndbi, albedo, awei, gemi, LST) = \
+            precompiled_func.caclulate_features_from_landsat(b1, b2, b3, b4, b5, b6, b7, b10)
+   
         pattern = '^(?:[^_]+_){3}([^_ ]+)'
         date = re.findall(pattern, SCENE)[0]
         month = date[4:6]
-        # prop_veg = np.where((max(ndvi)- min(ndvi))==0, 0, (ndvi - min(ndvi)) / (max(ndvi)- min(ndvi))**2)
-        # LSE = (0.004 * prop_veg) + 0.986
-        # LST = (b10 / (1 + (10.895 * (b10/14380)) * (np.log(LSE))))
-
         columns = (ndvi, ndsi, ndbi, albedo, awei, gemi)
-
         scene_features = np.concatenate(columns, axis=1)
+
         if month in ['05', '06', '07']: #early summer 
             early_sum_scenes.append(scene_features)
             early_sum_LST.append(LST)   
         else: #late summer
             late_sum_scenes.append(scene_features)
             late_sum_LST.append(LST)
+            
     es_features = util.aggregate_arrays_in_a_period(early_sum_scenes)
     ls_features = util.aggregate_arrays_in_a_period(late_sum_scenes)
     es_LST = util.compute_max(early_sum_LST)
@@ -116,7 +104,7 @@ def create_features():
     comm.Gather(sendbuf=features, recvbuf=features_all, root=0)
     if rank == 0:
         df = pd.DataFrame(features_all, columns = ['ndvi', 'ndsi', 'ndbi', 'albedo', 'awei', 'gemi', 'LST', 'ndvi_lag', 'ndsi_lag','ndbi_lag', 'albedo_lag', 'awei_lag','gemi_lag', 'LST_lag','community', 'period', 'year'], dtype=object )
-        df.to_csv('df.csv')
+        df.to_csv('df3.csv')
 
 
 

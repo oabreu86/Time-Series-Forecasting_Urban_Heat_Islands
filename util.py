@@ -42,6 +42,9 @@ def subset_scenes_by_year(all_scenes):
 
 def compute_zonal_stats(path_to_raster, vector, band_name):
     '''
+    This function first converts raw bands into their acceptable ranges (see page 12 of
+    the link below for more details) and then computes the zonal stats of the for the 
+    
     Inputs: 
         path_to_raster (string): path to raster data
         vector (geopandas df): 
@@ -51,8 +54,24 @@ def compute_zonal_stats(path_to_raster, vector, band_name):
                              ordered by com area order
     '''
     col_name = "mean_" + band_name
-    sum_stats = zonal_stats(vector, path_to_raster, 
-                            # nodata = Nan,
+    
+    raster = rasterio.open(path_to_raster)
+    affine = raster.transform
+    raster = raster.read()[0]
+    
+    print(raster.shape)
+    if band_name in ["b1", "b2", "b3", "b4", "b5", "b7"]:
+        raster = np.where((raster >= 7273) & (raster <= 43537), raster, 0)
+        raster = (raster * 0.0000275) -0.2
+    elif band_name == "b6":
+        raster = (raster * 0.0000275) -0.2
+    else: #band_name = "b10"
+        raster = (raster * 0.00341802) + 149
+    
+    
+    sum_stats = zonal_stats(vector, raster, 
+                            nodata = 0,
+                            affine = affine,
                             stats=["mean"])
     df = pd.DataFrame(sum_stats)
     df = df.rename(columns = {"mean": col_name})
