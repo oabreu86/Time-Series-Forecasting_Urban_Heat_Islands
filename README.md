@@ -40,7 +40,7 @@ We downloaded Landsat8 data from the USGS Earth Explorer. We initially considere
 
 ### Large Scale Data Processing
 1. Collecting Data on Midway:
-  - We first scp-ed the data we downloaded from our machines to the Midway 2 Computing Cluster. 
+    - We first scp-ed the data we downloaded from our machines to the Midway 2 Computing Cluster. 
   3. We stored the data in a directory where each scene had its own subdirectory. Each subdirectory contained all the bands for its respective scene.
 We used the same names as USGS for the subdirectory; this is noteworthy because the scene date is included in this name.
 Parallelizing Data Reading and Feature Engineering: 
