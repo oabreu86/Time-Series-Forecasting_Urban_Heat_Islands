@@ -96,19 +96,20 @@ Finally, with the optimal hyperparameters, we assess model performance in year i
 To predict LST, we created features from the raw bands. We computed the following features using band data as shown below:
 
 #### Normalized Difference Vegetation Index (NDVI) 
-NDVI = $b5 - b4b5 + b4$
-
-
+NDVI = b5 - b4b5 + b4
 (Landsat Normalized Difference Vegetation Index | U.S. Geological Survey, 2021)
 
-Normalized Difference Snow Index (NDSI)
-NDSI = b3 - b6b3 + b6 (Landsat Normalized Difference Snow Index | U.S. Geological Survey, 2021)
+#### Normalized Difference Snow Index (NDSI)
+NDSI = b3 - b6b3 + b6 
+(Landsat Normalized Difference Snow Index | U.S. Geological Survey, 2021)
 
-Normalized Difference Built-up Index (NDBI)
-NDBI = b6 - b5b6 + b5 (NDBI—ArcGIS Pro | Documentation, 2021)
+#### Normalized Difference Built-up Index (NDBI)
+NDBI = b6 - b5b6 + b5 
+(NDBI—ArcGIS Pro | Documentation, 2021)
 
-albedo
-albedo = (.356 * b1) + (.1310 * b2) + (.373 * b3) + (.085 * b4) +(0.072*b5)-0.00181.016   (Liang, 2000)
+#### Albedo
+albedo = (.356 * b1) + (.1310 * b2) + (.373 * b3) + (.085 * b4) +(0.072*b5)-0.00181.016   
+(Liang, 2000)
 
 Automated Water Extraction Index (AWEInsh) 
 AWEI= 4(b3 - b6)-(.25b5 + 2.75 b6)    (Gudian et. al,  2014)
