@@ -159,7 +159,7 @@ Our best performing model was a Ridge Regression with a regularization coefficie
 ![Difference LST 2020](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/difference.jpg)
 
 
-**Feature Importance**
+### Feature Importance
 
 We also assessed the feature importance of this model (Ridge Regression with Hyperparameters). When considering feature importance, we found that the spatial Lag of LST, NDSI, and NDBI all predicted Community Areas with higher LST, and concluded that NDSI and NDBI themselves predict lower future LST. The major feature's importances are summarized below. 
 
