@@ -126,7 +126,10 @@ AWEI= 4(b3 - b6)-(.25b5 + 2.75 b6)
 
 
 #### Global Environmental Monitoring Index (GEMI)
-GEMI = eta (1-.25eta) - b4-.1251-b4 where   eta =2*(b52-b42) + 1.5b5 + 0.5b4(b5+b4+0.5) (GEMI—ArcGIS Pro | Documentation, 2021)
+GEMI = eta (1-.25eta) - b4-.1251-b4 where   eta =2*(b52-b42) + 1.5b5 + 0.5b4(b5+b4+0.5) 
+
+(GEMI—ArcGIS Pro | Documentation, 2021)
+
 
 #### Land Surface Temperature (LST)
 LST=  b101+(10.895(b10/14380))ln(LSE) where LSE = 0.04α +0.986  where α =  (NDVI - min(NDVI)max(NDVI) - min(NDVI)) 2 
