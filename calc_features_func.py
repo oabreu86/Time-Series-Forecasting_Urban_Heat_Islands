@@ -10,15 +10,11 @@ def caclulate_features_from_landsat(b1, b2, b3, b4, b5, b6, b7, b10):
     ndvi = np.where((b4+b5)==0, 0, (b5-b4)/(b5+b4))
     ndsi =np.where((b3+b6)==0, 0, (b3-b6)/(b3+b6))
     ndbi = np.where((b6+b5)==0, 0, (b6-b5)/(b6+b5))
-
     albedo = ((0.356*b2)+(0.1310*b4)+(0.373*b5)+\
                     (0.085*b6)+(0.072*b7)-0.0018)/1.016
-
     awei = 4*(b3-b6)-(0.25*b5) + (2.75*b6)
-
     eta = (2*(b5**2-b4**2) + 1.5*b5 + 0.5*b4) / (b5+b4+0.5)
     gemi = eta*(1-0.25*eta) - ((b4-0.125)/(1-b4))   
-
     min_ndvi = np.min(ndvi)
     max_ndvi = np.max(ndvi)
     min_ndvi_arr = np.full(shape=ndvi.shape, fill_value=float(min_ndvi))
