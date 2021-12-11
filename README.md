@@ -21,7 +21,7 @@ We made a short video (<5 minutes) summarizing this project! You can see it here
 
 ## Contributions
 
-We all contributed to the writing of the report. Onel focused on handling the Machine Learning components. Gabe and Jaisha both worked on the pre-processing pipeline. Gabe focused on handling the spatial data (creating weights matrix and spatial lag columns, converting raster to vector data). Jaisha focused on the parallelization of the code (MPI4Py, Numba compiled functions). 
+We all contributed to the writing of the report. Onel focused on handling the Machine Learning components. Gabe and Jaisha both worked on the pre-processing pipeline. Gabe focused on handling the spatial data (creating weights matrix and spatial lag columns, converting raster to vector data). Jaisha focused on the parallelization and speed-up of the code (MPI4Py, AOT Numba compilation). 
 
 
 ## Work Cited 
