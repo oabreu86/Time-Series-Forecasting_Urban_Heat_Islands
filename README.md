@@ -136,6 +136,10 @@ LST=  b101+(10.895(b10/14380))ln(LSE) where LSE = 0.04α +0.986  where α =  (ND
 
 ## Results
 
+![Actual LST 2020](https://github.com/oabreu86/lsc2122_project_jaisha_gabe_onel/blob/main/plots/actual.jpg)
+
+
+
 ## Conclusion
 
 ## Contributions
