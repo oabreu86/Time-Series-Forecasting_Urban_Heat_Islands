@@ -41,12 +41,12 @@ We downloaded Landsat8 data from the USGS Earth Explorer. We initially considere
 ### Large Scale Data Processing
 1. Collecting Data on Midway:
     - We first scp-ed the data we downloaded from our machines to the Midway 2 Computing Cluster. 
-  3. We stored the data in a directory where each scene had its own subdirectory. Each subdirectory contained all the bands for its respective scene.
-We used the same names as USGS for the subdirectory; this is noteworthy because the scene date is included in this name.
-Parallelizing Data Reading and Feature Engineering: 
- We generated a list of all the scenes for all the years in our data and then split them into different lists by the scene acquisition year. 
-Using an .sbatch script, we requested 8 cores to run our processes in parallel. We used one core for each year of data we processed. 
-We used the MPI for Python package to scatter the list of lists of scenes across all cores so that each core would receive a list for all the scenes for a single year and would be responsible for processing the same. 
+    - We stored the data in a directory where each scene had its own subdirectory. Each subdirectory contained all the bands for its respective scene.
+    - We used the same names as USGS for the subdirectory; this is noteworthy because the scene date is included in this name.
+2. Parallelizing Data Reading and Feature Engineering: 
+    - We generated a list of all the scenes for all the years in our data and then split them into different lists by the scene acquisition year. 
+    - Using an .sbatch script, we requested 8 cores to run our processes in parallel. We used one core for each year of data we processed. 
+    - We used the MPI for Python package to scatter the list of lists of scenes across all cores so that each core would receive a list for all the scenes for a single year and would be responsible for processing the same. 
 
 Other Data Pre-processing
 We wrote code to read a Chicago Community Areas shapefile and convert it to a geopandas geodataframe with CRS 32616 (the same CRS as the TIF data). We then ran this code on each core.
