@@ -30,6 +30,46 @@ The rest of this write-up is as follows. In the Large Scale Data solution, we de
 
 ## Large Scale Data Solution
 
+
+### Data
+
+We used Tier 1 data from Landsat 8 Collection 2 Level 2. Landsat 8 data is ideal. The satellite has been running since 2013, giving us more than 7 years of consistent data. We use Collection 2 data because the preprocessing systems used to create Collection 2 data are more up-to-date and better documented than those for the Collection 1 data (Sayler 2020).  For a broader comparison between the two collections, see Sayler (2020). Within Collection 2, we used Level 2 data because it was more suited for our data needs. Level 2 gave us Surface Reflectance and Surface Temperature values for each pixel for each band which saved us from manual calculation of these values. Moreover, the pixel values (known as DNs) in Level 2 are already corrected for atmospheric effects. Finally, we only use Tier 1 images because they constitute the highest quality Landsat 8 data available. 
+
+We downloaded Landsat8 data from the USGS Earth Explorer. We initially considered accessing the Landsat data in the AWS Open Data Registry S3 Bucket landsat-pds. However, our AWS Educate accounts’ location on us-east-1 did not permit us to access that bucket as it was located in another AWS region. Given that our target variable was maximum LST which almost certainly happens during the summer and our study period was 2013 - 2020, we only downloaded data from summer months (May - September, inclusive) of those years. We also only downloaded Landsat 8 scenes that covered Chicago; we did this using the USGS Earth Explorer API and by uploading a shapefile containing rough Chicago boundaries. This ultimately left us with 133 scenes across 8 years. Each Landsat8 scene contains at least 8 .TIF (Tagged Image Format) files. Each file represents data from a different “band”. We used the bands as described in the Features Subsection to generate features to predict LST and to create LST itself. 
+
+
+### Large Scale Data Processing
+1. Collecting Data on Midway:
+  - We first scp-ed the data we downloaded from our machines to the Midway 2 Computing Cluster. 
+  3. We stored the data in a directory where each scene had its own subdirectory. Each subdirectory contained all the bands for its respective scene.
+We used the same names as USGS for the subdirectory; this is noteworthy because the scene date is included in this name.
+Parallelizing Data Reading and Feature Engineering: 
+ We generated a list of all the scenes for all the years in our data and then split them into different lists by the scene acquisition year. 
+Using an .sbatch script, we requested 8 cores to run our processes in parallel. We used one core for each year of data we processed. 
+We used the MPI for Python package to scatter the list of lists of scenes across all cores so that each core would receive a list for all the scenes for a single year and would be responsible for processing the same. 
+
+Other Data Pre-processing
+We wrote code to read a Chicago Community Areas shapefile and convert it to a geopandas geodataframe with CRS 32616 (the same CRS as the TIF data). We then ran this code on each core.
+Using the libpysal package, we created a spatial weights matrix using a first-order queen's contiguity definition of neighborhood. Since the pysal package stores that data as a dictionary, we converted it into a true matrix (2D numpy array). We also read this file to each core. 
+Because both files were small and geopandas does not integrate well with MPI4Py, we used this setup instead of reading each file once and then broadcasting to each core. We recognize that this could also be a successful code implementation.		
+
+Handling Data on Each Core:
+Individual Scene Processing:
+We first read each of the 8 .TIF files that correspond to the bands we need for our features, using the rasterio package.
+We then preprocessed the band data so that if it was outside the acceptable spectrum range, we converted it to zero. We then multiplied all values by the multiplicative scale factor and added the additive scale factor. For more details and the actual coefficients, see Sayler (2020). 
+We used the zonal_stats function from the rasterstats package to compute the mean value of each band for all pixels in a community area. 
+We then calculated the features using the relevant bands. 
+ 	     	Collective Scene Processing:
+We took the cellwise average for each of the feature columns separately for all scenes in May, June and July and for all scenes in August, and September. This converts a set of more than a dozen scenes per year to two averages: one for “early summer” and one for “late summer.”
+We then computed all of the features in the Features subsection described below (using the formulas we also show) for both the early summer and the late summer scenes. 
+We created our target Land Surface Temperature (LST) variable by taking the maximum of the early summer and late summer LST for each Community Area. 
+We calculated the spatial lag of the features for the early summer and late summer matrix. This gives the average value of each feature in the Community Areas surrounding a given Community Area. 
+As a last pre-processing step, we added data for scene year and period (i.e. whether it was “early summer” or “late summer”) and Community Area number. 
+
+To summarize, this subprocess moves data from many scenes for a given year, each of which contain 8 .TIF files(bands), to two 2D arrays. Each array contains 77 rows, one for each Community Area. Each array also contains 14 columns, one column for each of the features (inclusing LST that is our target variable) shown in the feature section below and one column for the spatial lag of those features.
+
+
+
 ## Results
 
 ## Conclusion
