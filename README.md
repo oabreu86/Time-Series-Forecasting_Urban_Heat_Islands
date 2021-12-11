@@ -7,10 +7,6 @@
 
 ## Repo Organization
 
-## Link to Video
-
-We made a short video (<5 minutes) summarizing this project! You can see it here!
-
 ## Introduction
 
 Temperatures across the world are rising. Large urban centers are particularly susceptible to disproportionate temperature rises. The “Urban Heat Island Effect” (UHI) describes the phenomenon of higher temperatures in urban zones compared with surrounding suburban and rural areas. UHIs tend to occur in areas with little vegetation, near freeways, and high levels of impervious surfaces (Chun and Guldmann, 2014).The consequences of extreme heat events worsened by UHI can include illness and death. 
