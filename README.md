@@ -31,7 +31,7 @@ The rest of this write-up is as follows. In the Large Scale Data solution, we de
 
 We used Tier 1 data from Landsat 8 Collection 2 Level 2. Landsat 8 data is ideal. The satellite has been running since 2013, giving us more than 7 years of consistent data. We use Collection 2 data because the preprocessing systems used to create Collection 2 data are more up-to-date and better documented than those for the Collection 1 data (Sayler 2020).  For a broader comparison between the two collections, see Sayler (2020). Within Collection 2, we used Level 2 data because it was more suited for our data needs. Level 2 gave us Surface Reflectance and Surface Temperature values for each pixel for each band which saved us from manual calculation of these values. Moreover, the pixel values (known as DNs) in Level 2 are already corrected for atmospheric effects. Finally, we only use Tier 1 images because they constitute the highest quality Landsat 8 data available. 
 
-We downloaded Landsat8 data from the USGS Earth Explorer. We initially considered accessing the Landsat data in the AWS Open Data Registry S3 Bucket landsat-pds. However, our AWS Educate accounts’ location on us-east-1 did not permit us to access that bucket as it was located in another AWS region. Given that our target variable was maximum LST which almost certainly happens during the summer and our study period was 2013 - 2020, we only downloaded data from summer months (May - September, inclusive) of those years. We also only downloaded Landsat 8 scenes that covered Chicago; we did this using the USGS Earth Explorer API and by uploading a shapefile containing rough Chicago boundaries. This ultimately left us with 133 scenes across 8 years. Each Landsat8 scene contains at least 8 .TIF (Tagged Image Format) files. Each file represents data from a different “band”. We used the bands as described in the Features Subsection to generate features to predict LST and to create LST itself. 
+We downloaded Landsat8 data from the USGS Earth Explorer. We initially considered accessing the Landsat data in the AWS Open Data Registry S3 Bucket landsat-pds. However, our AWS Educate accounts’ location on us-east-1 did not permit us to access that bucket as it was located in another AWS region. Given that our target variable was maximum LST which almost certainly happens during the summer and our study period was 2013 - 2020, we only downloaded data from summer months (May - September, inclusive) of those years. We also only downloaded Landsat 8 scenes that covered Chicago; we did this using the USGS Earth Explorer API and by uploading a shapefile containing rough Chicago boundaries. This ultimately left us with 133 scenes across 8 years. Each Landsat8 scene contains at least 8 .TIF (Tagged Image Format) files. Each file represents data from a different “band”. We used the bands as described in the Features Formulas Subsection to generate features to predict LST and to create LST itself. 
 
 
 ### Large Scale Data Processing
@@ -88,7 +88,7 @@ For a given model, we train the data on a given year i and choose optimal hyperp
 Finally, with the optimal hyperparameters, we assess model performance in year i + 2. 
 
 
-### Features
+### Features Formulas
 To predict LST, we created features from the raw bands. We computed the following features using band data as shown below:
 
 #### Normalized Difference Vegetation Index (NDVI) 
