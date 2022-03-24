@@ -1,4 +1,4 @@
-# Getting Warmer?: Forecasting Chicago Urban Heat Islands 2013-2020
+# Getting Warmer? Forecasting Chicago Urban Heat Islands 2013-2020
 
 ##### Syeda Jaisha, Onel Abreu, and Gabe Morrison
 ##### Professor Jon Clindaniel
